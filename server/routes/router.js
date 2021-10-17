@@ -46,6 +46,31 @@ router.post('/', (req, res) => {
                    res.sendStatus(500);                
                })
    });
+   // PUT
+router.put('/:id', (req,res) => {
+    let queryString = `
+            UPDATE "todo_app" 
+            SET "completed" = $1
+            WHERE "id" = $2;
+    `;
+
+    let values = [
+        true,
+        req.body.id
+    ];
+
+    console.log('this is my values ', values);
+    
+    pool.query(queryString , values)
+        .then((results) => {
+            res.sendStatus(200);
+        })
+        .catch((err) => {
+            console.log('PUT err', err);
+            res.sendStatus(500);
+        })
+})
+
 
 module.exports = router;
 
