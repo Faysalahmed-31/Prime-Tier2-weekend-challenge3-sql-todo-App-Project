@@ -1,6 +1,7 @@
 //console.log('JQ');
 
 $( document ).ready(onReady)
+$(document).on('click', '.completeBtn', completeTask);
 
 function onReady() {
     console.log('ready!');
@@ -43,5 +44,30 @@ function getTasks() {
                 </li>
             `);
         }
+    });
+}
+
+function completeTask() {
+    let id = $(this).data('id')/*get the id of the row*/
+    console.log('id of clicked is: ', id);
+    
+    $.ajax({
+      method: 'PUT',
+      url: `/list/${id}`
+    }).then((res) => {
+      console.log('Succesfully updated the tasks.', res);
+              
+        $(this).parent().css('color','greenyellow');
+    //  setTimeout(function(){           
+       // $(this).css('color','greenyellow');
+       // }, 1200);
+        let that = this;
+        
+        $(that).parent().css('text-decoration','line-through');
+
+
+    }).catch((error) => {
+      console.log('/PUT request failed: ', error);
+      alert('Check console for error. PUT request failed.')
     });
 }
