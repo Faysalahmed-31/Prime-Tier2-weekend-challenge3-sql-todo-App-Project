@@ -27,6 +27,25 @@ router.get('/', (req, res) => {
         });
 });
 
+// POST
+router.post('/', (req, res) => {
+    // add a new tasks to the DB
+   let queryString = `INSERT INTO "todo_app" ( task ) VALUES ($1);`;
+       let values = [
+           req.body.task,  // $1
+       ]
+      console.log('this is my values', values )
+       
+       // Send the query to the DB
+       pool.query(queryString , values)
+               .then((results) => {
+                   res.sendStatus(201);
+               })
+               .catch((err) => {
+                   console.log('POST to sql failed error', err);
+                   res.sendStatus(500);                
+               })
+   });
 
 module.exports = router;
 
