@@ -14,3 +14,13 @@ app.use( '/list', taskRouter );
 app.listen( PORT, ()=>{
     console.log( `listening on port`, PORT );
 });
+
+// app.delete( '/', (req, res )=>{    
+//     let queryString = `DELETE FROM "todo_ap" where id=${ req.query.id };`
+//     pool.query( queryString ).then( ( results )=>{
+//         res.sendStatus( 200 );
+//     }).catch( (err)=>{
+//         console.log( err );
+//         res.sendStatus( 500 );
+//     })
+//   })

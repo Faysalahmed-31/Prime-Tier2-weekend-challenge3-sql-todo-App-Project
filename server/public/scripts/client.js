@@ -2,6 +2,7 @@
 
 $( document ).ready(onReady)
 $(document).on('click', '.completeBtn', completeTask);
+$(document).on('click', '.deleteBtn', deleteTask);
 
 function onReady() {
     console.log('ready!');
@@ -39,8 +40,9 @@ function getTasks() {
         for (let i = 0; i < response.length; i++) {
             $('#displayList').append(`
                 <li>${response[i].task}
-                    <button class="completeBtn" data-id="${response[i].id}">Complete</button>
                     <button class="deleteBtn" data-id="${response[i].id}">Delete</button>
+                    <button class="completeBtn" data-id="${response[i].id}">Complete</button>
+                    
                 </li>
             `);
         }
@@ -70,4 +72,22 @@ function completeTask() {
       console.log('/PUT request failed: ', error);
       alert('Check console for error. PUT request failed.')
     });
+}
+
+//delete
+
+function deleteTask() {
+    let id = $(this).data('id')
+    $.ajax({
+        method: 'DELETE',
+        url: `/list?${id}`,
+    }).then(function (response) {
+        $(this).closest().remove();
+        console.log('item deleted');
+        getData();
+    })
+     .catch((error) => {
+        console.log('/DELETE request failed: ', error);
+         alert('Check console for error. DELETE request failed.')
+        });
 }

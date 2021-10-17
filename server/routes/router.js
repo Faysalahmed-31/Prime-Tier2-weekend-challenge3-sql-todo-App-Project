@@ -70,9 +70,27 @@ router.put('/:id', (req,res) => {
             res.sendStatus(500);
         })
 })
+// // DELETE
+
+   router.delete('/:id', (req,res)=> {
+    console.log('/task delete hit:', req.query.task);
+    const queryString = `DELETE FROM "todo_ap" WHERE id='${req.query.id}';`;
+    //let sqlParams = [taskToDelete]
+    pool.query(queryString).then((results)=>{
+      res.sendStatus(200);
+    }).catch((err)=>{
+      console.log('error deleting task from database:', err);
+      res.sendStatus(500);
+    })
+  })
 
 
 module.exports = router;
+
+
+
+
+
 
 
 
