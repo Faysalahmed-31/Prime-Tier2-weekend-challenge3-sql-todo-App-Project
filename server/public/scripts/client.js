@@ -40,8 +40,8 @@ function getTasks() {
         for (let i = 0; i < response.length; i++) {
             $('#displayList').append(`
                 <li>${response[i].task}
-                    <button class="deleteBtn" data-id="${response[i].id}">Delete</button>
-                    <button class="completeBtn" data-id="${response[i].id}">Complete</button>
+                    <button class="deleteBtn" data-id="${response[i].id}">Delete ❌</button>
+                    <button class="completeBtn" data-id="${response[i].id}">Complete ✔</button>
                     
                 </li>
             `);
@@ -75,19 +75,35 @@ function completeTask() {
 }
 
 //delete
-
-function deleteTask() {
-    let id = $(this).data('id')
+function deleteTask(){
+    const id = $(this).data('id')
     $.ajax({
         method: 'DELETE',
-        url: `/list?${id}`,
+        url: `/list/${id}`,
     }).then(function (response) {
         $(this).closest().remove();
-        console.log('item deleted');
-        getData();
+        console.log('Item deleted!');
+        getTasks(); //Refresh list of the lists
+    }).catch(function (error) {
+        alert('something went wrong!');
+        console.log('error in DELETE', error)
     })
-     .catch((error) => {
-        console.log('/DELETE request failed: ', error);
-         alert('Check console for error. DELETE request failed.')
-        });
 }
+
+
+
+// function deleteTask() {
+//     let id = $(this).data('id')
+//     $.ajax({
+//         method: 'DELETE',
+//         url: `/list?${id}`,
+//     }).then(function (res) {
+//         $(this).closest().remove();
+//         console.log('item deleted');
+//         getData();
+//     })
+//      .catch((error) => {
+//         console.log('/DELETE request failed: ', error);
+//          alert('Check console for error. DELETE request failed.')
+//         });
+// }

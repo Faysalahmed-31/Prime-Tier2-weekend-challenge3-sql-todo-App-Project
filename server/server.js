@@ -15,12 +15,14 @@ app.listen( PORT, ()=>{
     console.log( `listening on port`, PORT );
 });
 
-// app.delete( '/', (req, res )=>{    
-//     let queryString = `DELETE FROM "todo_ap" where id=${ req.query.id };`
-//     pool.query( queryString ).then( ( results )=>{
-//         res.sendStatus( 200 );
-//     }).catch( (err)=>{
-//         console.log( err );
-//         res.sendStatus( 500 );
+// app.delete('/list/:id',  (req,res)=> {
+//     console.log('/task delete hit:', req.query.task);
+//     const queryString = `DELETE FROM "todo_ap" WHERE id='${req.query.task}';`;
+//     //let sqlParams = [taskToDelete]
+//     pool.query(queryString).then((results)=>{
+//       res.sendStatus(200);
+//     }).catch((err)=>{
+//       console.log('error deleting task from database:', err);
+//       res.sendStatus(500);
 //     })
 //   })
